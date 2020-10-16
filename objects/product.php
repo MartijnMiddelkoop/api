@@ -24,14 +24,12 @@ class Product
        return $this->conn->query($query);
    }
 
-
-
-    function delete($id) {
-     $query = "DELETE FROM " . $this->table_name . "WHERE id=" . $id;
-     return $this->conn->query($query);
-
-     }
-
+// one product
+function delete($id){
+    $query = "DELETE FROM " . $this->table_name . " WHERE id=".$id;
+    $result = $this->conn->query($query);
+    return $result;
+ }
 
  function create($naam, $beschrijving, $prijs, $categorie) {
      $query = "INSERT INTO " . $this->table_name . 

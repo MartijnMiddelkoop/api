@@ -1,34 +1,28 @@
-<?php 
-header("Acces-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UFT-8");
-
+<?php
+// required headers
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+// database connection will be here
+// include database and object files
 include_once '../config/database.php';
 include_once '../objects/product.php';
 
-$id = null;
+
 if(isset($_GET['id'])) {
     $id = $_GET['id'];
 }
-
+// instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
+// initialize object
 $product = new Product($db);
+// read products will be here
+// query products
+$result = $product->delete($id);
 
-if($id == null) {
-    http_response_code(404);
-    echo json_encode(array("message" => "product verwijderen is mislukt"));
+if ($product->delete($id) === TRUE) {
+    echo "Product is succesvol verwijderd";
 } else {
-    if($product->delete($id)) {
-    http_response_code(200);
-    echo json_encode(array("message" => "product verwijderen is gelukt"));
-    }else{
-        http_response_code(404);
-    echo json_encode(array("message" => "product verwijderen is mislukt"));
-    }
-    
+    echo "Error deleting record: ";
 }
-
-
-
-
 ?>
